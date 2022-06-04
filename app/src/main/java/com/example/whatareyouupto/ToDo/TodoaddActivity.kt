@@ -27,6 +27,10 @@ class TodoaddActivity : AppCompatActivity() {
         binding = ActivityTodoaddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val todoDate = intent.getStringExtra("date")
+
+        binding.todoDate.text = todoDate
+
         binding.todoComplete.setOnClickListener {
 
             val todoTitle  = binding.todoTitle.text.toString()
@@ -37,18 +41,15 @@ class TodoaddActivity : AppCompatActivity() {
 
             } else{
 
-                val memo = Memo(null,todoTitle)
+                val memo = Memo(null,todoTitle,todoDate)
                 helper.insertMemo(memo)
 
-                val adapter = RecyclerViewAdapter(this,listData,helper)
-
                 finish()
-                adapter.listData.clear()
-                adapter.listData.addAll(helper.selectMemo())
-                adapter.notifyDataSetChanged()
+
 
             }
 
         }
+
     }
 }

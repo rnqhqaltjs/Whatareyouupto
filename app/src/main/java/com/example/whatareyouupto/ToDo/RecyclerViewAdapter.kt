@@ -34,6 +34,7 @@ class RecyclerViewAdapter(val context: Context,  val listData:ArrayList<Memo>, v
         fun setMemo(memo: Memo){
             binding.id.text = memo.id.toString()
             binding.title.text = memo.title
+            binding.date.text = memo.date
 
         }
 

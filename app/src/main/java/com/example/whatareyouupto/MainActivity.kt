@@ -26,21 +26,13 @@ class MainActivity : AppCompatActivity() {
     private val listData = ArrayList<Memo>()
     private val helper = SqliteHelper(this,"memo",null,1)
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //캘린더 하단 일정 리사이클러뷰
-        val adapter = RecyclerViewAdapter(this,listData,helper)
-        adapter.listData.addAll(helper.selectMemo())
-        adapter.helper = helper
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-
+        //캘린더 ui
         val startTimeCalendar = Calendar.getInstance()
         val endTimeCalendar = Calendar.getInstance()
 
@@ -73,26 +65,40 @@ class MainActivity : AppCompatActivity() {
             binding.fab.isVisible = true
 
             binding.fab.setOnClickListener {
-                Toast.makeText(this@MainActivity, "$date", Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this, TodoaddActivity::class.java)
+                intent.putExtra("date",date.toString())
                 startActivity(intent)
+
             }
+            val adapter = RecyclerViewAdapter(this,listData,helper)
+            adapter.listData.addAll(helper.selectMemo())
+            adapter.helper = helper
+
+            binding.recyclerView.adapter = adapter
+            binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+            adapter.listData.clear()
+            adapter.listData.addAll(helper.selectMemo())
+            adapter.notifyDataSetChanged()
+
+
 
 
         }
 
+
+
     }
 
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun addTask() {
-//        val intent = Intent()
-//        val title = intent.getStringExtra("title")
-//        if (title != null) {
-//            items.add(Todo(title))
-//        }
-//        binding.recyclerView.adapter?.notifyDataSetChanged()
-//
-//    }
+    //캘린더 하단 일정 리사이클러뷰
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onResume() {
+        super.onResume()
+
+
+
+
+    }
 
 }
