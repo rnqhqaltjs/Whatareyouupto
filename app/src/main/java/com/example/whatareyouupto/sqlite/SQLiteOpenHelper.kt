@@ -41,7 +41,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     fun selectMemo():MutableList<Memo>{
         val list = mutableListOf<Memo>()
         //전체조회
-        val selectAll = "select * from memo ORDER BY date DESC"
+        val selectAll = "select * from memo"
         //읽기전용 데이터베이스 변수
         val rd = readableDatabase
         //데이터를 받아 줍니다.
