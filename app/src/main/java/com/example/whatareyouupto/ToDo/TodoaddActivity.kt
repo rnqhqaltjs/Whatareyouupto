@@ -43,6 +43,7 @@ class TodoaddActivity : AppCompatActivity() {
 
                 val memo = Memo(null,todoTitle,todoDate)
                 helper.insertMemo(memo)
+                Toast.makeText(this, "추가", Toast.LENGTH_SHORT).show()
 
                 finish()
 

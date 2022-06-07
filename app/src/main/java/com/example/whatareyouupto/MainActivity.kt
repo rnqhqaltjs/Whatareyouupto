@@ -2,6 +2,8 @@ package com.example.whatareyouupto
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.sqlite.SQLiteOpenHelper
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -25,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val listData = ArrayList<Memo>()
     private val helper = SqliteHelper(this,"memo",null,1)
+    private var tododate = ""
+    private var dates = ArrayList<CalendarDay>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,12 +61,24 @@ class MainActivity : AppCompatActivity() {
         val minMaxDecorator = MinMaxDecorator(stCalendarDay, enCalendarDay)
         val boldDecorator = BoldDecorator(stCalendarDay, enCalendarDay)
         val todayDecorator = TodayDecorator(this)
+        val myselectordecorator = MySelectorDecorator(this)
 
-        binding.calendarView.addDecorators(sundayDecorator, saturdayDecorator, boldDecorator, minMaxDecorator, todayDecorator)
+        binding.calendarView.addDecorators(boldDecorator, sundayDecorator, saturdayDecorator, myselectordecorator, minMaxDecorator, todayDecorator)
 
         binding.calendarView.setOnDateChangedListener { widget, date, selected ->
 
+//            val itemcount = binding.recyclerView.adapter?.itemCount
+//
+//            if (itemcount!! >=1) {
+//
+//                binding.calendarView.addDecorator(EventDecorator(Color.GRAY, Collections.singleton(date)))
+//
+//            }
+
+
             binding.fab.isVisible = true
+
+            tododate = date.toString()
 
             binding.fab.setOnClickListener {
 
@@ -71,23 +87,11 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
 
             }
-            val adapter = RecyclerViewAdapter(this,listData,helper)
-            adapter.listData.addAll(helper.selectMemo())
-            adapter.helper = helper
 
-            binding.recyclerView.adapter = adapter
-            binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-            adapter.listData.clear()
-            adapter.listData.addAll(helper.selectMemo())
-            adapter.notifyDataSetChanged()
-
-
+            ShowRecyclerView()
 
 
         }
-
-
 
     }
 
@@ -96,9 +100,24 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-
-
+        ShowRecyclerView()
 
     }
+
+    fun ShowRecyclerView(){
+
+        val adapter = RecyclerViewAdapter(this,listData,helper)
+        adapter.listData.addAll(helper.selectMemo(tododate))
+        adapter.helper = helper
+
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        adapter.listData.clear()
+        adapter.listData.addAll(helper.selectMemo(tododate))
+        adapter.notifyDataSetChanged()
+
+    }
+
 
 }

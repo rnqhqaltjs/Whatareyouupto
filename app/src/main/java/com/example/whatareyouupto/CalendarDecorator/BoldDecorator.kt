@@ -1,6 +1,8 @@
 package com.example.whatareyouupto.CalendarDecorator
 
+import android.graphics.Color
 import android.graphics.Typeface
+import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -16,5 +18,6 @@ class BoldDecorator(min: CalendarDay, max:CalendarDay): DayViewDecorator {
     override fun decorate(view: DayViewFacade?) {
         view?.addSpan(object: StyleSpan(Typeface.BOLD){})
         view?.addSpan(object: RelativeSizeSpan(1.4f){})
+        view?.addSpan(object: ForegroundColorSpan(Color.BLACK){})
     }
 }

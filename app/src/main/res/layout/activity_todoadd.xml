@@ -7,17 +7,17 @@
     tools:context=".ToDo.TodoaddActivity"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/todo_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="일정 이름"/>
-
     <TextView
         android:id="@+id/todo_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
+    <EditText
+        android:id="@+id/todo_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="일정 이름" />
 
     <Button
         android:id="@+id/todo_complete"

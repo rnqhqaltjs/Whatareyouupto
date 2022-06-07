@@ -38,10 +38,10 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
 
 
     //select 메소드
-    fun selectMemo():MutableList<Memo>{
+    fun selectMemo(date : String):MutableList<Memo>{
         val list = mutableListOf<Memo>()
         //전체조회
-        val selectAll = "select * from memo"
+        val selectAll = "select * from memo WHERE date = '${date}' ORDER BY id DESC"
         //읽기전용 데이터베이스 변수
         val rd = readableDatabase
         //데이터를 받아 줍니다.
