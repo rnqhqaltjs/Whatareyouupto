@@ -32,9 +32,10 @@ class RecyclerViewAdapter(val context: Context,  val listData:ArrayList<Memo>, v
     inner class Viewholder(private val binding: TodoitemMainBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun setMemo(memo: Memo){
-            binding.id.text = memo.id.toString()
+
             binding.title.text = memo.title
-            binding.date.text = memo.date
+            binding.mintime.text = memo.mintime
+            binding.maxtime.text = memo.maxtime
 
         }
 

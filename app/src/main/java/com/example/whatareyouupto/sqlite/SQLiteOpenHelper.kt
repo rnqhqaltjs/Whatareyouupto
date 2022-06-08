@@ -13,7 +13,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     //데이터베이스가 만들어 지지않은 상태에서만 작동합니다. 이미 만들어져 있는 상태라면 실행되지 않습니다.
     override fun onCreate(db: SQLiteDatabase?) {
         //테이블을 생성할 쿼리를 작성하여 줍시다.
-        val create = "create table memo (id integer primary key,title text,date text)"
+        val create = "create table memo (id integer primary key,title text, mintime text, maxtime text, date text)"
         //실행시켜 줍니다.
         db?.execSQL(create)
     }
@@ -27,6 +27,8 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
         val values = ContentValues()
         //넘겨줄 컬럼의 매개변수 지정
         values.put("title",memo.title)
+        values.put("mintime",memo.mintime)
+        values.put("maxtime",memo.maxtime)
         values.put("date",memo.date)
 
         //쓰기나 수정이 가능한 데이터베이스 변수
@@ -51,9 +53,12 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
         while(cursor.moveToNext()){
             val id = cursor.getLong(cursor.getColumnIndexOrThrow("id"))
             val title = cursor.getString(cursor.getColumnIndexOrThrow("title"))
+            val mintime = cursor.getString(cursor.getColumnIndexOrThrow("mintime"))
+            val maxtime = cursor.getString(cursor.getColumnIndexOrThrow("maxtime"))
             val date = cursor.getString(cursor.getColumnIndexOrThrow("date"))
 
-            list.add(Memo(id,title,date))
+
+            list.add(Memo(id,title,mintime,maxtime,date))
         }
         cursor.close()
         rd.close()

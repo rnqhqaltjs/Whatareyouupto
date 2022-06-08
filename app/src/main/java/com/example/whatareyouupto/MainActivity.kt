@@ -2,7 +2,6 @@ package com.example.whatareyouupto
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.amitshekhar.DebugDB
 import com.example.whatareyouupto.CalendarDecorator.*
 import com.example.whatareyouupto.ToDo.RecyclerViewAdapter
 import com.example.whatareyouupto.ToDo.TodoaddActivity
@@ -19,7 +17,9 @@ import com.example.whatareyouupto.sqlite.Memo
 import com.example.whatareyouupto.sqlite.SqliteHelper
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.CalendarMode
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,13 +28,17 @@ class MainActivity : AppCompatActivity() {
     private val listData = ArrayList<Memo>()
     private val helper = SqliteHelper(this,"memo",null,1)
     private var tododate = ""
-    private var dates = ArrayList<CalendarDay>()
+//    private var date2 = CalendarDay(Calendar.getInstance().get(Calendar.YEAR),
+//        Calendar.getInstance().get(Calendar.YEAR),
+//            Calendar.getInstance().get(Calendar.YEAR))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        binding.calendarView.addDecorator(EventDecorator(Color.GRAY, Collections.singleton(date2)))
 
         //캘린더 ui
         val startTimeCalendar = Calendar.getInstance()
@@ -67,15 +71,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.calendarView.setOnDateChangedListener { widget, date, selected ->
 
-//            val itemcount = binding.recyclerView.adapter?.itemCount
-//
-//            if (itemcount!! >=1) {
-//
-//                binding.calendarView.addDecorator(EventDecorator(Color.GRAY, Collections.singleton(date)))
-//
-//            }
-
-
             binding.fab.isVisible = true
 
             tododate = date.toString()
@@ -89,7 +84,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             ShowRecyclerView()
-
 
         }
 
@@ -117,7 +111,14 @@ class MainActivity : AppCompatActivity() {
         adapter.listData.addAll(helper.selectMemo(tododate))
         adapter.notifyDataSetChanged()
 
-    }
+        val itemcount = binding.recyclerView.adapter?.itemCount
 
+        if (itemcount!! >=3) {
+
+            binding.fab.isVisible = false
+
+        }
+
+    }
 
 }
