@@ -5,7 +5,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +27,7 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    lateinit var toggle: ActionBarDrawerToggle
     private val listData = ArrayList<Memo>()
     private val helper = SqliteHelper(this,"memo",null,1)
     private var tododate = ""
@@ -37,6 +40,18 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
+        toggle = ActionBarDrawerToggle(this,binding.drawer,
+            R.string.drawer_opened,
+            R.string.drawer_closed
+        )
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        toggle.syncState()
+
 
 //        binding.calendarView.addDecorator(EventDecorator(Color.GRAY, Collections.singleton(date2)))
 
@@ -66,6 +81,8 @@ class MainActivity : AppCompatActivity() {
         val boldDecorator = BoldDecorator(stCalendarDay, enCalendarDay)
         val todayDecorator = TodayDecorator(this)
         val myselectordecorator = MySelectorDecorator(this)
+
+        binding.calendarView.selectedDate = stCalendarDay
 
         binding.calendarView.addDecorators(boldDecorator, sundayDecorator, saturdayDecorator, myselectordecorator, minMaxDecorator, todayDecorator)
 
@@ -119,6 +136,15 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(toggle.onOptionsItemSelected(item)){
+
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
 }

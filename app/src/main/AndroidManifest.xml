@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Whatareyouupto">
         <activity
+            android:name=".ToDo.TodoinsideActivity"
+            android:exported="false" />
+        <activity
             android:name=".ToDo.TodoaddActivity"
             android:exported="false" />
         <activity

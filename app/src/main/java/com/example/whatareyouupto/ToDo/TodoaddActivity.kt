@@ -67,7 +67,7 @@ class TodoaddActivity : AppCompatActivity() {
                 mintime = binding.minimumtime.text.toString()
                 maxtime = binding.maximumtime.text.toString()
 
-                val memo = Memo(null,todoTitle,mintime,maxtime,todoDate)
+                val memo = Memo(null,todoTitle,mintime,maxtime,todoDate!!)
                 helper.insertMemo(memo)
 
                 finish()

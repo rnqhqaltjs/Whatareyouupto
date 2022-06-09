@@ -2,6 +2,7 @@ package com.example.whatareyouupto.ToDo
 
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,17 @@ class RecyclerViewAdapter(val context: Context,  val listData:ArrayList<Memo>, v
             binding.title.text = memo.title
             binding.mintime.text = memo.mintime
             binding.maxtime.text = memo.maxtime
+
+            itemView.setOnClickListener {
+                val intent = Intent(context,TodoinsideActivity::class.java)
+                intent.putExtra("title",memo.title)
+                intent.putExtra("mintime",memo.mintime)
+                intent.putExtra("maxtime",memo.maxtime)
+                intent.putExtra("date",memo.date)
+                intent.putExtra("cursor",adapterPosition)
+                context.startActivity(intent)
+
+            }
 
         }
 

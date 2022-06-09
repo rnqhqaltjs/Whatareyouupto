@@ -5,5 +5,5 @@ data class Memo(
     var title: String,
     var mintime : String,
     var maxtime : String,
-    var date : String?,
+    var date : String,
 )
