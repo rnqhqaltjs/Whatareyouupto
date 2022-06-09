@@ -71,6 +71,9 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
         val values = ContentValues()
 
         values.put("title",memo.title)
+        values.put("mintime",memo.mintime)
+        values.put("maxtime",memo.maxtime)
+        values.put("date",memo.date)
 
 
         val wd = writableDatabase
@@ -80,8 +83,8 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     }
 
     //delete 메소드
-    fun deleteMemo(memo: Memo){
-        val delete = "delete from Memo where title = ${memo.id}"
+    fun deleteMemo(id : Long){
+        val delete = "delete from memo where id = $id"
         val db = writableDatabase
         db.execSQL(delete)
         db.close()

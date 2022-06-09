@@ -1,7 +1,9 @@
 package com.example.whatareyouupto.ToDo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.whatareyouupto.R
 import com.example.whatareyouupto.databinding.ActivityMainBinding
@@ -24,6 +26,7 @@ class TodoinsideActivity : AppCompatActivity() {
         val title = intent.getStringExtra("title")
         val mintime = intent.getStringExtra("mintime")
         val maxtime = intent.getStringExtra("maxtime")
+
 //        val date = intent.getStringExtra("date")
 //            ?.replace("CalendarDay","")
 //            ?.replace("{","")
@@ -39,11 +42,11 @@ class TodoinsideActivity : AppCompatActivity() {
 //        binding.date.text = date
 
         binding.deletefab.setOnClickListener {
-            val cursor = intent.getIntExtra("cursor",1)
 
-            //강제로 null을 허용하기 위해 !! 사용
-            helper.deleteMemo(listData[cursor])
-            listData.remove(listData[cursor])
+            val cursor = intent.getLongExtra("id",-1)
+
+            helper.deleteMemo(cursor)
+
             Toast.makeText(this,"삭제 완료", Toast.LENGTH_SHORT).show()
             finish()
 
