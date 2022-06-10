@@ -40,12 +40,15 @@ class RecyclerViewAdapter(val context: Context,  val listData:ArrayList<Memo>, v
             binding.maxtime.text = memo.maxtime
 
             itemView.setOnClickListener {
+
                 val intent = Intent(context,TodoinsideActivity::class.java)
                 intent.putExtra("title",memo.title)
                 intent.putExtra("mintime",memo.mintime)
                 intent.putExtra("maxtime",memo.maxtime)
-                intent.putExtra("date",memo.date)
                 intent.putExtra("id",memo.id)
+                intent.putExtra("year",memo.year)
+                intent.putExtra("month",memo.month)
+                intent.putExtra("day",memo.day)
                 context.startActivity(intent)
 
             }

@@ -61,7 +61,9 @@
             android:layout_margin="16dp"
             android:src="@drawable/ic_baseline_add_24"
             android:visibility="invisible"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:backgroundTint="@color/orange"
+            app:tint="@android:color/white"/>
 
     </LinearLayout>
 

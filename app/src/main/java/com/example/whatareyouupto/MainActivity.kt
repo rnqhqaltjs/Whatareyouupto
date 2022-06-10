@@ -30,7 +30,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     private val listData = ArrayList<Memo>()
     private val helper = SqliteHelper(this,"memo",null,1)
-    private var tododate = ""
+    private var memoyear = 0
+    private var memomonth = 0
+    private var memoday = 0
+
 //    private var date2 = CalendarDay(Calendar.getInstance().get(Calendar.YEAR),
 //        Calendar.getInstance().get(Calendar.YEAR),
 //            Calendar.getInstance().get(Calendar.YEAR))
@@ -90,12 +93,20 @@ class MainActivity : AppCompatActivity() {
 
             binding.fab.isVisible = true
 
-            tododate = date.toString()
+            val year =  date.year
+            val month = date.month
+            val day = date.day
+
+            memoyear = year
+            memomonth = month
+            memoday = day
 
             binding.fab.setOnClickListener {
 
                 val intent = Intent(this, TodoaddActivity::class.java)
-                intent.putExtra("date",date.toString())
+                intent.putExtra("year",year)
+                intent.putExtra("month",month)
+                intent.putExtra("day",day)
                 startActivity(intent)
 
             }
@@ -118,14 +129,14 @@ class MainActivity : AppCompatActivity() {
     fun ShowRecyclerView(){
 
         val adapter = RecyclerViewAdapter(this,listData,helper)
-        adapter.listData.addAll(helper.selectMemo(tododate))
+        adapter.listData.addAll(helper.selectMemo(memoyear,memomonth,memoday))
         adapter.helper = helper
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         adapter.listData.clear()
-        adapter.listData.addAll(helper.selectMemo(tododate))
+        adapter.listData.addAll(helper.selectMemo(memoyear,memomonth,memoday))
         adapter.notifyDataSetChanged()
 
         val itemcount = binding.recyclerView.adapter?.itemCount

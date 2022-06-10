@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import org.w3c.dom.Text
 
 // SQLiteOpenHelper 상속받아 SQLite 를 사용하도록 하겠습니다.
 class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) : SQLiteOpenHelper(context, name, factory, version) {
@@ -13,7 +14,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     //데이터베이스가 만들어 지지않은 상태에서만 작동합니다. 이미 만들어져 있는 상태라면 실행되지 않습니다.
     override fun onCreate(db: SQLiteDatabase?) {
         //테이블을 생성할 쿼리를 작성하여 줍시다.
-        val create = "create table memo (id integer primary key,title text, mintime text, maxtime text, date text)"
+        val create = "create table memo (id integer primary key,title text, mintime text, maxtime text,year integer, month integer, day integer)"
         //실행시켜 줍니다.
         db?.execSQL(create)
     }
@@ -29,7 +30,9 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
         values.put("title",memo.title)
         values.put("mintime",memo.mintime)
         values.put("maxtime",memo.maxtime)
-        values.put("date",memo.date)
+        values.put("year",memo.year)
+        values.put("month",memo.month)
+        values.put("day",memo.day)
 
         //쓰기나 수정이 가능한 데이터베이스 변수
         val wd = writableDatabase
@@ -40,10 +43,10 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
 
 
     //select 메소드
-    fun selectMemo(date : String):MutableList<Memo>{
+    fun selectMemo(year : Int,month : Int, day : Int):MutableList<Memo>{
         val list = mutableListOf<Memo>()
         //전체조회
-        val selectAll = "select * from memo WHERE date = '${date}' ORDER BY id DESC"
+        val selectAll = "select * from memo WHERE year = $year and month = $month and day = $day ORDER BY id DESC"
         //읽기전용 데이터베이스 변수
         val rd = readableDatabase
         //데이터를 받아 줍니다.
@@ -55,10 +58,13 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
             val title = cursor.getString(cursor.getColumnIndexOrThrow("title"))
             val mintime = cursor.getString(cursor.getColumnIndexOrThrow("mintime"))
             val maxtime = cursor.getString(cursor.getColumnIndexOrThrow("maxtime"))
-            val date = cursor.getString(cursor.getColumnIndexOrThrow("date"))
+            val year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
+            val month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
+            val day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
 
 
-            list.add(Memo(id,title,mintime,maxtime,date))
+
+            list.add(Memo(id,title,mintime,maxtime,year,month,day))
         }
         cursor.close()
         rd.close()
@@ -67,17 +73,16 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     }
 
     //update 메소드
-    fun updateMemo(memo: Memo){
+    fun updateMemo(id :Long,title: String, mintime : String, maxtime : String,){
         val values = ContentValues()
 
-        values.put("title",memo.title)
-        values.put("mintime",memo.mintime)
-        values.put("maxtime",memo.maxtime)
-        values.put("date",memo.date)
+        values.put("title",title)
+        values.put("mintime",mintime)
+        values.put("maxtime",maxtime)
 
 
         val wd = writableDatabase
-        wd.update("memo",values,"id=${memo.id}",null)
+        wd.update("memo",values,"id = $id",null)
         wd.close()
 
     }

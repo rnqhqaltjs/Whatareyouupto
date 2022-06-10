@@ -5,5 +5,7 @@ data class Memo(
     var title: String,
     var mintime : String,
     var maxtime : String,
-    var date : String,
+    var year : Int,
+    var month : Int,
+    var day : Int
 )
