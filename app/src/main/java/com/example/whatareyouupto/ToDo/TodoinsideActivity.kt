@@ -1,15 +1,12 @@
 package com.example.whatareyouupto.ToDo
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
-import com.example.whatareyouupto.R
-import com.example.whatareyouupto.databinding.ActivityMainBinding
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.whatareyouupto.databinding.ActivityTodoinsideBinding
-import com.example.whatareyouupto.sqlite.Memo
 import com.example.whatareyouupto.sqlite.SqliteHelper
 
 class TodoinsideActivity : AppCompatActivity() {
@@ -29,6 +26,8 @@ class TodoinsideActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val title = intent.getStringExtra("title")
+        val content = intent.getStringExtra("content")
+        val image = intent.getIntExtra("image",-1)
         val mintime = intent.getStringExtra("mintime")
         val maxtime = intent.getStringExtra("maxtime")
         val year = intent.getIntExtra("year",-1)
@@ -37,11 +36,17 @@ class TodoinsideActivity : AppCompatActivity() {
         val id = intent.getLongExtra("id",-1)
 
         binding.title.text = title
+        binding.content.text = content
         binding.mintime.text = mintime
         binding.maxtime.text = maxtime
         binding.year.text = year.toString()+"년"
         binding.month.text = month.toString()+"월"
         binding.day.text = day.toString()+"일"
+
+        Glide.with(this)
+            .load(image)
+            .override(150,150)
+            .into(binding.image)
 
         binding.deletefab.setOnClickListener {
 
@@ -60,14 +65,9 @@ class TodoinsideActivity : AppCompatActivity() {
             intent.putExtra("id",id)
 
             startActivity(intent)
-            Toast.makeText(this,"수정 완료", Toast.LENGTH_SHORT).show()
             finish()
 
-
         }
-
-
-
 
     }
 

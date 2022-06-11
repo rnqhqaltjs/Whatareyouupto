@@ -14,7 +14,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     //데이터베이스가 만들어 지지않은 상태에서만 작동합니다. 이미 만들어져 있는 상태라면 실행되지 않습니다.
     override fun onCreate(db: SQLiteDatabase?) {
         //테이블을 생성할 쿼리를 작성하여 줍시다.
-        val create = "create table memo (id integer primary key,title text, mintime text, maxtime text,year integer, month integer, day integer)"
+        val create = "create table memo (id integer primary key,title text,content text, image integer, mintime text, maxtime text,year integer, month integer, day integer)"
         //실행시켜 줍니다.
         db?.execSQL(create)
     }
@@ -28,6 +28,8 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
         val values = ContentValues()
         //넘겨줄 컬럼의 매개변수 지정
         values.put("title",memo.title)
+        values.put("content",memo.content)
+        values.put("image",memo.image)
         values.put("mintime",memo.mintime)
         values.put("maxtime",memo.maxtime)
         values.put("year",memo.year)
@@ -56,6 +58,8 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
         while(cursor.moveToNext()){
             val id = cursor.getLong(cursor.getColumnIndexOrThrow("id"))
             val title = cursor.getString(cursor.getColumnIndexOrThrow("title"))
+            val content = cursor.getString(cursor.getColumnIndexOrThrow("content"))
+            val image = cursor.getInt(cursor.getColumnIndexOrThrow("image"))
             val mintime = cursor.getString(cursor.getColumnIndexOrThrow("mintime"))
             val maxtime = cursor.getString(cursor.getColumnIndexOrThrow("maxtime"))
             val year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
@@ -64,7 +68,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
 
 
 
-            list.add(Memo(id,title,mintime,maxtime,year,month,day))
+            list.add(Memo(id,title,content,image,mintime,maxtime,year,month,day))
         }
         cursor.close()
         rd.close()

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.whatareyouupto.databinding.TodoitemMainBinding
 import com.example.whatareyouupto.sqlite.Memo
 import com.example.whatareyouupto.sqlite.SqliteHelper
@@ -39,10 +40,17 @@ class RecyclerViewAdapter(val context: Context,  val listData:ArrayList<Memo>, v
             binding.mintime.text = memo.mintime
             binding.maxtime.text = memo.maxtime
 
+            Glide.with(context)
+                .load(memo.image)
+                .override(80,80)
+                .into(binding.image)
+
             itemView.setOnClickListener {
 
                 val intent = Intent(context,TodoinsideActivity::class.java)
                 intent.putExtra("title",memo.title)
+                intent.putExtra("content",memo.content)
+                intent.putExtra("image",memo.image)
                 intent.putExtra("mintime",memo.mintime)
                 intent.putExtra("maxtime",memo.maxtime)
                 intent.putExtra("id",memo.id)
