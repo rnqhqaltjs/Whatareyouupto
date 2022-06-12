@@ -77,10 +77,12 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     }
 
     //update 메소드
-    fun updateMemo(id :Long,title: String, mintime : String, maxtime : String,){
+    fun updateMemo(id :Long,title: String,content : String,image : Int, mintime : String, maxtime : String,){
         val values = ContentValues()
 
         values.put("title",title)
+        values.put("content",content)
+        values.put("image",image)
         values.put("mintime",mintime)
         values.put("maxtime",maxtime)
 

@@ -60,6 +60,8 @@ class TodoinsideActivity : AppCompatActivity() {
 
             val intent = Intent(this,TodoeditActivity::class.java)
             intent.putExtra("title",binding.title.text)
+            intent.putExtra("content",binding.content.text)
+            intent.putExtra("image",image)
             intent.putExtra("mintime",binding.mintime.text)
             intent.putExtra("maxtime",binding.maxtime.text)
             intent.putExtra("id",id)

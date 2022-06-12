@@ -186,7 +186,7 @@ class TodoaddActivity : AppCompatActivity() {
 
             if(title.isEmpty()){
 
-                Toast.makeText(this,"일정을 입력하세요",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"일정 이름을 입력하세요",Toast.LENGTH_SHORT).show()
 
             } else {
 
