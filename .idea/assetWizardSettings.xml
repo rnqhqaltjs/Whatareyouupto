@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$PROJECT_DIR$/../../../../Kim%20SeungWu/AppData/Local/Android/Sdk/icons/material/materialicons/star/baseline_star_24.xml" />
+                                      <entry key="url" value="file:/$PROJECT_DIR$/../../../../Kim%20SeungWu/AppData/Local/Android/Sdk/icons/material/materialicons/format_list_bulleted/baseline_format_list_bulleted_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,8 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ff7f00" />
-                            <entry key="outputName" value="starpick" />
+                            <entry key="outputName" value="listicon" />
                             <entry key="sourceFile" value="C:\Users\Kim SeungWu\Documents\AndroidLab\Whatareyouupto" />
                           </map>
                         </option>

@@ -2,24 +2,23 @@ package com.example.whatareyouupto
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.whatareyouupto.CalendarDecorator.*
-import com.example.whatareyouupto.ToDo.RecyclerViewAdapter
-import com.example.whatareyouupto.ToDo.TodoaddActivity
+import com.example.whatareyouupto.ToDoCalendar.RecyclerViewAdapter
+import com.example.whatareyouupto.ToDoCalendar.TodoaddActivity
 import com.example.whatareyouupto.databinding.ActivityMainBinding
 import com.example.whatareyouupto.sqlite.Memo
 import com.example.whatareyouupto.sqlite.SqliteHelper
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.CalendarMode
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -28,15 +27,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     lateinit var toggle: ActionBarDrawerToggle
-    private val listData = ArrayList<Memo>()
-    private val helper = SqliteHelper(this,"memo",null,1)
-    private var memoyear = 0
-    private var memomonth = 0
-    private var memoday = 0
+//    private val tabTitleArray = arrayOf("오늘 뭐해?", "캘린더")
+    private val tabIconArray = arrayOf(R.drawable.listicon, R.drawable.calendaricon)
 
-//    private var date2 = CalendarDay(Calendar.getInstance().get(Calendar.YEAR),
-//        Calendar.getInstance().get(Calendar.YEAR),
-//            Calendar.getInstance().get(Calendar.YEAR))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,99 +48,31 @@ class MainActivity : AppCompatActivity() {
 
         toggle.syncState()
 
-
-//        binding.calendarView.addDecorator(EventDecorator(Color.GRAY, Collections.singleton(date2)))
-
-        //캘린더 ui
-        val startTimeCalendar = Calendar.getInstance()
-        val endTimeCalendar = Calendar.getInstance()
-
-        val currentYear = startTimeCalendar.get(Calendar.YEAR)
-        val currentMonth = startTimeCalendar.get(Calendar.MONTH)
-        val currentDate = startTimeCalendar.get(Calendar.DATE)
-
-        endTimeCalendar.set(Calendar.MONTH, currentMonth+5)
-
-        binding.calendarView.state().edit()
-            .setFirstDayOfWeek(Calendar.SUNDAY)
-            .setMinimumDate(CalendarDay.from(currentYear, currentMonth, 1))
-            .setMaximumDate(CalendarDay.from(currentYear, currentMonth+5, endTimeCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)))
-            .setCalendarDisplayMode(CalendarMode.MONTHS)
-            .commit()
-
-        val stCalendarDay = CalendarDay(currentYear, currentMonth, currentDate)
-        val enCalendarDay = CalendarDay(endTimeCalendar.get(Calendar.YEAR), endTimeCalendar.get(Calendar.MONTH), endTimeCalendar.get(Calendar.DATE))
-
-        val sundayDecorator = SundayDecorator()
-        val saturdayDecorator = SaturdayDecorator()
-        val minMaxDecorator = MinMaxDecorator(stCalendarDay, enCalendarDay)
-        val boldDecorator = BoldDecorator(stCalendarDay, enCalendarDay)
-        val todayDecorator = TodayDecorator(this)
-        val myselectordecorator = MySelectorDecorator(this)
-
-        binding.calendarView.selectedDate = stCalendarDay
-
-        binding.calendarView.addDecorators(boldDecorator, sundayDecorator, saturdayDecorator, myselectordecorator, minMaxDecorator, todayDecorator)
-
-        binding.calendarView.setOnDateChangedListener { widget, date, selected ->
-
-            binding.fab.isVisible = true
-
-            val year =  date.year
-            val month = date.month
-            val day = date.day
-
-            memoyear = year
-            memomonth = month
-            memoday = day
-
-            binding.fab.setOnClickListener {
-
-                val intent = Intent(this, TodoaddActivity::class.java)
-                intent.putExtra("year",year)
-                intent.putExtra("month",month)
-                intent.putExtra("day",day)
-                startActivity(intent)
-
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                // 탭이 선택 되었을 때
             }
 
-            ShowRecyclerView()
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                // 탭이 선택되지 않은 상태로 변경 되었을 때
+            }
 
-        }
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                // 이미 선택된 탭이 다시 선택 되었을 때
+            }
+        })
 
-    }
+        // 뷰페이저에 어댑터 연결
+        binding.pager.adapter = ViewPagerAdapter(this)
 
-    //캘린더 하단 일정 리사이클러뷰
-    @SuppressLint("NotifyDataSetChanged")
-    override fun onResume() {
-        super.onResume()
-
-        ShowRecyclerView()
-
-    }
-
-    fun ShowRecyclerView(){
-
-        val adapter = RecyclerViewAdapter(this,listData,helper)
-        adapter.listData.addAll(helper.selectMemo(memoyear,memomonth,memoday))
-        adapter.helper = helper
-
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-        adapter.listData.clear()
-        adapter.listData.addAll(helper.selectMemo(memoyear,memomonth,memoday))
-        adapter.notifyDataSetChanged()
-
-        val itemcount = binding.recyclerView.adapter?.itemCount
-
-        if (itemcount!! >=3) {
-
-            binding.fab.isVisible = false
-
-        }
+        TabLayoutMediator(binding.tabLayout, binding.pager) {tab, position ->
+//            tab.text = tabTitleArray[position]
+            tab.icon = getDrawable(tabIconArray[position])
+        }.attach()
 
     }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item)){
@@ -157,5 +82,7 @@ class MainActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
+
+
 
 }

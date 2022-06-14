@@ -10,13 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Whatareyouupto">
         <activity
-        android:name=".ToDo.TodoeditActivity"
+        android:name=".ToDoCalendar.TodoeditActivity"
         android:exported="false" />
         <activity
-            android:name=".ToDo.TodoinsideActivity"
+            android:name=".ToDoCalendar.TodoinsideActivity"
             android:exported="false" />
         <activity
-            android:name=".ToDo.TodoaddActivity"
+            android:name=".ToDoCalendar.TodoaddActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

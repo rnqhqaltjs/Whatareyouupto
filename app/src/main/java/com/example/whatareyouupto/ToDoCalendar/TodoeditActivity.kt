@@ -1,39 +1,31 @@
-package com.example.whatareyouupto.ToDo
+package com.example.whatareyouupto.ToDoCalendar
 
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.CompoundButton
 import android.widget.Toast
-import com.example.whatareyouupto.MainActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.whatareyouupto.R
-import com.example.whatareyouupto.databinding.ActivityMainBinding
-import com.example.whatareyouupto.databinding.ActivityTodoaddBinding
-import com.example.whatareyouupto.sqlite.Memo
+import com.example.whatareyouupto.databinding.ActivityTodoeditBinding
 import com.example.whatareyouupto.sqlite.SqliteHelper
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TodoaddActivity : AppCompatActivity() {
+class TodoeditActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTodoaddBinding
+    private lateinit var binding: ActivityTodoeditBinding
     private val helper = SqliteHelper(this,"memo",null,1)
-    private var mintime = ""
-    private var maxtime = ""
-    private var image = 0
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_todoadd)
 
-        binding = ActivityTodoaddBinding.inflate(layoutInflater)
+        binding = ActivityTodoeditBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
@@ -42,9 +34,12 @@ class TodoaddActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val year = intent.getIntExtra("year",-1)
-        val month = intent.getIntExtra("month",-1)
-        val day = intent.getIntExtra("day",-1)
+        val title = intent.getStringExtra("title")
+        val content = intent.getStringExtra("content")
+        var image = intent.getIntExtra("image",-1)
+        val mintime = intent.getStringExtra("mintime")
+        val maxtime = intent.getStringExtra("maxtime")
+        val cursor = intent.getLongExtra("id",-1)
 
         binding.title.addTextChangedListener(object : TextWatcher {
 
@@ -94,9 +89,27 @@ class TodoaddActivity : AppCompatActivity() {
             }
         })
 
+        image = if(image == R.drawable.checkboxpick){
 
-        binding.checkbox.setImageResource(R.drawable.checkboxpick)
-        image = R.drawable.checkboxpick
+            binding.checkbox.setImageResource(R.drawable.checkboxpick)
+            R.drawable.checkboxpick
+
+        } else if(image == R.drawable.cakepick){
+
+            binding.cake.setImageResource(R.drawable.cakepick)
+            R.drawable.cakepick
+
+        } else if(image == R.drawable.bookmarkpick){
+
+            binding.bookmark.setImageResource(R.drawable.bookmarkpick)
+            R.drawable.bookmarkpick
+
+        } else{
+
+            binding.star.setImageResource(R.drawable.starpick)
+            R.drawable.starpick
+
+        }
 
 
         binding.checkbox.setOnClickListener {
@@ -139,6 +152,18 @@ class TodoaddActivity : AppCompatActivity() {
             image = R.drawable.starpick
         }
 
+        binding.minimumtime.text = mintime
+        binding.maximumtime.text = maxtime
+        binding.title.setText(title)
+        binding.content.setText(content)
+
+        if(binding.maximumtime.text == "12:00 오전 (+1일)"){
+            binding.allday.isChecked = true
+
+            binding.minimumtime.isEnabled = false
+            binding.maximumtime.isEnabled = false
+        }
+
         //  스위치를 클릭했을때
         binding.allday.setOnCheckedChangeListener{
                 CompoundButton, onSwitch ->
@@ -162,8 +187,6 @@ class TodoaddActivity : AppCompatActivity() {
             }
         }
 
-        binding.minimumtime.text = SimpleDateFormat("hh:mm a",Locale.KOREA).format(System.currentTimeMillis())
-        binding.maximumtime.text = SimpleDateFormat("hh:mm a",Locale.KOREA).format(System.currentTimeMillis()+ 3600000)
 
         binding.minimumtime.setOnClickListener {
 
@@ -181,21 +204,21 @@ class TodoaddActivity : AppCompatActivity() {
 
         binding.fab.setOnClickListener {
 
-            val title  = binding.title.text.toString()
-            val content = binding.content.text.toString()
+            val edittitle = binding.title.text.toString()
+            val editcontent = binding.content.text.toString()
+            val editimage = image
+            val editmintime = binding.minimumtime.text.toString()
+            val editmaxtime = binding.maximumtime.text.toString()
 
-            if(title.isEmpty()){
+            if(binding.title.text.isEmpty()){
 
-                Toast.makeText(this,"일정 이름을 입력하세요",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"일정 이름을 입력하세요", Toast.LENGTH_SHORT).show()
 
             } else {
 
-                mintime = binding.minimumtime.text.toString()
-                maxtime = binding.maximumtime.text.toString()
 
-                val memo = Memo(null,title,content,image,mintime,maxtime,year,month,day)
-                helper.insertMemo(memo)
-
+                helper.updateMemo(cursor,edittitle,editcontent,editimage,editmintime,editmaxtime)
+                Toast.makeText(this,"수정 완료", Toast.LENGTH_SHORT).show()
                 finish()
 
 

@@ -50,7 +50,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
         //전체조회
         val selectAll = "select * from memo WHERE year = $year and month = $month and day = $day ORDER BY id DESC"
         //읽기전용 데이터베이스 변수
-        val rd = readableDatabase
+        val rd = this.readableDatabase
         //데이터를 받아 줍니다.
         val cursor = rd.rawQuery(selectAll,null)
 
