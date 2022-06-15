@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whatareyouupto.CalendarDecorator.*
+import com.example.whatareyouupto.ToDoList.ListRVAdapter
 import com.example.whatareyouupto.databinding.FragmentCalendarBinding
 import com.example.whatareyouupto.sqlite.Memo
 import com.example.whatareyouupto.sqlite.SqliteHelper
@@ -73,7 +74,7 @@ class CalendarFragment : Fragment() {
         val todayDecorator = TodayDecorator(requireContext())
         val myselectordecorator = MySelectorDecorator(requireContext())
 
-        binding.calendarView.selectedDate = stCalendarDay
+//        binding.calendarView.selectedDate = stCalendarDay
 
         binding.calendarView.addDecorators(boldDecorator, sundayDecorator, saturdayDecorator, myselectordecorator, minMaxDecorator, todayDecorator)
 

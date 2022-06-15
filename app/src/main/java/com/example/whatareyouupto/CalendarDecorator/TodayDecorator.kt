@@ -14,6 +14,6 @@ class TodayDecorator(context: Context): DayViewDecorator {
         return day?.equals(date)!!
     }
     override fun decorate(view: DayViewFacade?) {
-        view?.addSpan(object: ForegroundColorSpan(Color.GREEN){})
+        view?.addSpan(object: ForegroundColorSpan(Color.MAGENTA){})
     }
 }

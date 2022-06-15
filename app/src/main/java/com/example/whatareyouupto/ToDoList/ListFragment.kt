@@ -2,6 +2,7 @@ package com.example.whatareyouupto.ToDoList
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whatareyouupto.R
 import com.example.whatareyouupto.ToDoCalendar.CalendarRVAdapter
+import com.example.whatareyouupto.ToDoCalendar.TodoaddActivity
 import com.example.whatareyouupto.databinding.FragmentCalendarBinding
 import com.example.whatareyouupto.databinding.FragmentListBinding
 import com.example.whatareyouupto.sqlite.Memo
@@ -36,6 +38,29 @@ class ListFragment : Fragment() {
     ): View? {
         binding = FragmentListBinding.inflate(inflater,container,false)
 
+        val startTimeCalendar = Calendar.getInstance()
+
+        val currentYear = startTimeCalendar.get(Calendar.YEAR)
+        val currentMonth = startTimeCalendar.get(Calendar.MONTH)
+        val currentDate = startTimeCalendar.get(Calendar.DATE)
+
+        binding.day.text = currentDate.toString() + "일 "
+        binding.month.text = (currentMonth+1).toString() + "월 "
+        binding.year.text = currentYear.toString() + "년 "
+
+        binding.fab.setOnClickListener {
+
+            val intent = Intent(requireContext(), TodoaddActivity::class.java)
+            intent.putExtra("year",currentYear)
+            intent.putExtra("month",currentMonth)
+            intent.putExtra("day",currentDate)
+            startActivity(intent)
+
+        }
+
+
+
+
         ShowRecyclerView()
 
         return binding.root
@@ -50,6 +75,8 @@ class ListFragment : Fragment() {
     }
 
     fun ShowRecyclerView(){
+
+        binding.fab.isVisible = true
 
         val startTimeCalendar = Calendar.getInstance()
 
@@ -68,7 +95,13 @@ class ListFragment : Fragment() {
         helper?.let { adapter?.listData?.addAll(it.selectMemo(currentYear,currentMonth,currentDate)) }
         adapter?.notifyDataSetChanged()
 
+        val itemcount = binding.recyclerView.adapter?.itemCount
+
+        if (itemcount!! >=3) {
+
+            binding.fab.isVisible = false
+
+        }
+
     }
-
-
 }

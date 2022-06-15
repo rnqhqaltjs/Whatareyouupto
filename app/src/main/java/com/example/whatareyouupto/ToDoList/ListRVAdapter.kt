@@ -71,6 +71,7 @@ class ListRVAdapter(val context: Context, val listData:ArrayList<Memo>, var help
             binding.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
 
                 if (isChecked) {
+
                     binding.item.isEnabled = false
                     binding.title.paintFlags = binding.title.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     binding.mintime.paintFlags = binding.mintime.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -85,8 +86,8 @@ class ListRVAdapter(val context: Context, val listData:ArrayList<Memo>, var help
                     helper?.updatecheckbox(memo.id!!,true)
 
                 } else {
-                    binding.item.isEnabled = true
 
+                    binding.item.isEnabled = true
                     binding.title.paintFlags = binding.title.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                     binding.mintime.paintFlags = binding.mintime.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                     binding.maxtime.paintFlags = binding.maxtime.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
