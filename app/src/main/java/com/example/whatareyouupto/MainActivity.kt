@@ -1,26 +1,12 @@
 package com.example.whatareyouupto
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
-import com.example.whatareyouupto.CalendarDecorator.*
-import com.example.whatareyouupto.ToDoCalendar.RecyclerViewAdapter
-import com.example.whatareyouupto.ToDoCalendar.TodoaddActivity
 import com.example.whatareyouupto.databinding.ActivityMainBinding
-import com.example.whatareyouupto.sqlite.Memo
-import com.example.whatareyouupto.sqlite.SqliteHelper
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.CalendarMode
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {

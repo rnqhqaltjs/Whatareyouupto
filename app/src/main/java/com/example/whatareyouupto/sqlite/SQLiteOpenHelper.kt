@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import org.w3c.dom.Text
 
 // SQLiteOpenHelper 상속받아 SQLite 를 사용하도록 하겠습니다.
 class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) : SQLiteOpenHelper(context, name, factory, version) {
@@ -14,7 +13,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     //데이터베이스가 만들어 지지않은 상태에서만 작동합니다. 이미 만들어져 있는 상태라면 실행되지 않습니다.
     override fun onCreate(db: SQLiteDatabase?) {
         //테이블을 생성할 쿼리를 작성하여 줍시다.
-        val create = "create table memo (id integer primary key,title text,content text, image integer, mintime text, maxtime text,year integer, month integer, day integer)"
+        val create = "create table memo (id integer primary key,checkbox integer,title text,content text, image integer, mintime text, maxtime text,year integer, month integer, day integer)"
         //실행시켜 줍니다.
         db?.execSQL(create)
     }
@@ -27,6 +26,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     fun insertMemo(memo: Memo){
         val values = ContentValues()
         //넘겨줄 컬럼의 매개변수 지정
+        values.put("checkbox",memo.checkbox)
         values.put("title",memo.title)
         values.put("content",memo.content)
         values.put("image",memo.image)
@@ -48,7 +48,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     fun selectMemo(year : Int,month : Int, day : Int):MutableList<Memo>{
         val list = mutableListOf<Memo>()
         //전체조회
-        val selectAll = "select * from memo WHERE year = $year and month = $month and day = $day ORDER BY id DESC"
+        val selectAll = "select * from memo WHERE year = $year and month = $month and day = $day ORDER BY id"
         //읽기전용 데이터베이스 변수
         val rd = this.readableDatabase
         //데이터를 받아 줍니다.
@@ -57,6 +57,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
         //반복문을 사용하여 list 에 데이터를 넘겨 줍시다.
         while(cursor.moveToNext()){
             val id = cursor.getLong(cursor.getColumnIndexOrThrow("id"))
+            val checkbox = cursor.getInt(cursor.getColumnIndexOrThrow("checkbox"))>0
             val title = cursor.getString(cursor.getColumnIndexOrThrow("title"))
             val content = cursor.getString(cursor.getColumnIndexOrThrow("content"))
             val image = cursor.getInt(cursor.getColumnIndexOrThrow("image"))
@@ -68,7 +69,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
 
 
 
-            list.add(Memo(id,title,content,image,mintime,maxtime,year,month,day))
+            list.add(Memo(id,checkbox,title,content,image,mintime,maxtime,year,month,day))
         }
         cursor.close()
         rd.close()
@@ -86,6 +87,18 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
         values.put("mintime",mintime)
         values.put("maxtime",maxtime)
 
+
+        val wd = writableDatabase
+        wd.update("memo",values,"id = $id",null)
+        wd.close()
+
+    }
+
+    //update 메소드
+    fun updatecheckbox(id: Long, checkbox: Boolean){
+        val values = ContentValues()
+
+        values.put("checkbox",checkbox)
 
         val wd = writableDatabase
         wd.update("memo",values,"id = $id",null)

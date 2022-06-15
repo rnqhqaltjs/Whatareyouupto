@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whatareyouupto.CalendarDecorator.*
-import com.example.whatareyouupto.MainActivity
 import com.example.whatareyouupto.databinding.FragmentCalendarBinding
 import com.example.whatareyouupto.sqlite.Memo
 import com.example.whatareyouupto.sqlite.SqliteHelper
@@ -118,7 +117,7 @@ class CalendarFragment : Fragment() {
 
     fun ShowRecyclerView(){
 
-        val adapter = activity?.let { RecyclerViewAdapter(it,listData,helper) }
+        val adapter = activity?.let { CalendarRVAdapter(it,listData,helper) }
         helper?.let { adapter?.listData?.addAll(it.selectMemo(memoyear,memomonth,memoday)) }
         adapter?.helper = helper
 
