@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whatareyouupto.R
@@ -57,6 +59,15 @@ class ListFragment : Fragment() {
             startActivity(intent)
 
         }
+
+        val itemcount = binding.recyclerView.adapter?.itemCount
+
+        val Cursor = helper?.readableDatabase?.rawQuery("select * from memo WHERE year = $currentYear" +
+                " and month = $currentMonth and day = $currentDate and checkbox = 1",null)
+
+        binding.textView.text = "전체 작업 " + itemcount.toString() + "중 완료된 항목 " + Cursor!!.count.toString()
+
+
 
 
 
