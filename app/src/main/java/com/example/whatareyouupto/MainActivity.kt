@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var toggle: ActionBarDrawerToggle
 //    private val tabTitleArray = arrayOf("오늘 뭐해?", "캘린더")
-    private val tabIconArray = arrayOf(R.drawable.listicon, R.drawable.calendaricon)
+    private val tabIconArray = arrayOf(R.drawable.listicon, R.drawable.calendaricon,R.drawable.donelist)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

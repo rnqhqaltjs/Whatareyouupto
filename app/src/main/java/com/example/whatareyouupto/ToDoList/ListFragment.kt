@@ -3,23 +3,21 @@ package com.example.whatareyouupto.ToDoList
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.whatareyouupto.R
-import com.example.whatareyouupto.ToDoCalendar.CalendarRVAdapter
 import com.example.whatareyouupto.ToDoCalendar.TodoaddActivity
-import com.example.whatareyouupto.databinding.FragmentCalendarBinding
 import com.example.whatareyouupto.databinding.FragmentListBinding
 import com.example.whatareyouupto.sqlite.Memo
 import com.example.whatareyouupto.sqlite.SqliteHelper
+import java.lang.Double.NaN
 import java.util.*
+
 
 class ListFragment : Fragment() {
 
@@ -60,19 +58,30 @@ class ListFragment : Fragment() {
 
         }
 
-        val itemcount = binding.recyclerView.adapter?.itemCount
-
-        val Cursor = helper?.readableDatabase?.rawQuery("select * from memo WHERE year = $currentYear" +
-                " and month = $currentMonth and day = $currentDate and checkbox = 1",null)
-
-        binding.textView.text = "전체 작업 " + itemcount.toString() + "중 완료된 항목 " + Cursor!!.count.toString()
-
-
-
-
 
 
         ShowRecyclerView()
+
+        binding.refresh.setOnClickListener {
+
+            val itemcount = binding.recyclerView.adapter?.itemCount
+
+            val Cursor = helper?.readableDatabase?.rawQuery("select * from memo WHERE year = $currentYear" +
+                    " and month = $currentMonth and day = $currentDate and checkbox = 1",null)
+
+            binding.progressBar.max = itemcount!!
+            binding.progressBar.progress = Cursor!!.count
+
+            val n1 = itemcount.toDouble()
+            val n2 = Cursor.count.toDouble()
+
+            binding.cbc.text = String.format("%.0f",(n2/n1)*100) + "%"
+
+            if(binding.cbc.text == "NaN%"){
+                binding.cbc.text = "0%"
+            }
+
+        }
 
         return binding.root
     }
@@ -95,6 +104,7 @@ class ListFragment : Fragment() {
         val currentMonth = startTimeCalendar.get(Calendar.MONTH)
         val currentDate = startTimeCalendar.get(Calendar.DATE)
 
+
         val adapter = activity?.let { ListRVAdapter(it,listData,helper) }
         helper?.let { adapter?.listData?.addAll(it.selectMemo(currentYear,currentMonth,currentDate)) }
         adapter?.helper = helper
@@ -113,6 +123,22 @@ class ListFragment : Fragment() {
             binding.fab.isVisible = false
 
         }
+
+        val Cursor = helper?.readableDatabase?.rawQuery("select * from memo WHERE year = $currentYear" +
+                " and month = $currentMonth and day = $currentDate and checkbox = 1",null)
+
+        binding.progressBar.max = itemcount
+        binding.progressBar.progress = Cursor!!.count
+
+        val n1 = itemcount.toDouble()
+        val n2 = Cursor.count.toDouble()
+
+        binding.cbc.text = String.format("%.0f",(n2/n1)*100) + "%"
+
+        if(binding.cbc.text == "NaN%"){
+            binding.cbc.text = "0%"
+        }
+
 
     }
 }

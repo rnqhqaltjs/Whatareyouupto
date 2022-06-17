@@ -23,12 +23,6 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/pen"/>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,17 +63,63 @@
                 android:layout_height="1dp"
                 android:layout_weight="1"/>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:max="3"
+            android:progress="0"
+            android:scaleY="2"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp">
+
+            <ImageView
+                android:id="@+id/refresh"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/refresh" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/orange"
-                android:src="@drawable/ic_baseline_add_24"
-                app:tint="@android:color/white"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"/>
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:text="진행도 : " />
+
+            <TextView
+                android:id="@+id/cbc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+                android:text="0%" />
+
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/orange"
+            android:src="@drawable/ic_baseline_add_24"
+            app:tint="@android:color/white"
+            tools:ignore="SpeakableTextPresentCheck"
+            android:layout_gravity="end"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

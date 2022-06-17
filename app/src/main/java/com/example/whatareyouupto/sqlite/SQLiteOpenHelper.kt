@@ -77,6 +77,38 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
         return list
     }
 
+    fun DoneMemo():MutableList<Memo>{
+        val list = mutableListOf<Memo>()
+        //전체조회
+        val selectAll = "select * from memo WHERE checkbox = 1 ORDER BY id"
+        //읽기전용 데이터베이스 변수
+        val rd = this.readableDatabase
+        //데이터를 받아 줍니다.
+        val cursor = rd.rawQuery(selectAll,null)
+
+        //반복문을 사용하여 list 에 데이터를 넘겨 줍시다.
+        while(cursor.moveToNext()){
+            val id = cursor.getLong(cursor.getColumnIndexOrThrow("id"))
+            val checkbox = cursor.getInt(cursor.getColumnIndexOrThrow("checkbox"))>0
+            val title = cursor.getString(cursor.getColumnIndexOrThrow("title"))
+            val content = cursor.getString(cursor.getColumnIndexOrThrow("content"))
+            val image = cursor.getInt(cursor.getColumnIndexOrThrow("image"))
+            val mintime = cursor.getString(cursor.getColumnIndexOrThrow("mintime"))
+            val maxtime = cursor.getString(cursor.getColumnIndexOrThrow("maxtime"))
+            val year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
+            val month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
+            val day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
+
+
+
+            list.add(Memo(id,checkbox,title,content,image,mintime,maxtime,year,month,day))
+        }
+        cursor.close()
+        rd.close()
+
+        return list
+    }
+
     //update 메소드
     fun updateMemo(id :Long,title: String,content : String,image : Int, mintime : String, maxtime : String,){
         val values = ContentValues()

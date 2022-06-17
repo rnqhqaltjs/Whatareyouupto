@@ -83,6 +83,7 @@ class ListRVAdapter(val context: Context, val listData:ArrayList<Memo>, var help
                     binding.image.setColorFilter(Color.parseColor("#808080"))
 
 
+
                     helper?.updatecheckbox(memo.id!!,true)
 
                 } else {
