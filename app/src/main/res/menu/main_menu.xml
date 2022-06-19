@@ -4,8 +4,8 @@
     tools:showIn = "navigation_view">
 
     <item
-        android:id="@+id/item_bookmark"
-        android:title="관심 항목" />
+        android:id="@+id/item_deleteall"
+        android:title="전체 데이터 삭제" />
 
     <item
         android:id="@+id/item_manual"

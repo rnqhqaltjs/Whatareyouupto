@@ -49,14 +49,7 @@ class DoneFragment : Fragment() {
 
     fun ShowRecyclerView(){
 
-        val startTimeCalendar = Calendar.getInstance()
-
-        val currentYear = startTimeCalendar.get(Calendar.YEAR)
-        val currentMonth = startTimeCalendar.get(Calendar.MONTH)
-        val currentDate = startTimeCalendar.get(Calendar.DATE)
-
-
-        val adapter = activity?.let { ListRVAdapter(it,listData,helper) }
+        val adapter = activity?.let { DoneRVAdapter(it,listData,helper) }
         helper?.let { adapter?.listData?.addAll(it.DoneMemo()) }
         adapter?.helper = helper
 
@@ -66,6 +59,7 @@ class DoneFragment : Fragment() {
         adapter?.listData?.clear()
         helper?.let { adapter?.listData?.addAll(it.DoneMemo()) }
         adapter?.notifyDataSetChanged()
+
 
     }
 

@@ -13,6 +13,7 @@
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.2825641025641026" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.2856410256410256" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/drawable/orange.xml" value="0.2825641025641026" />
+        <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/drawable/prbdesign.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/drawable/radius.xml" value="0.29010416666666666" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout-v23/activity_main.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout/activitiy_todoedit.xml" value="0.11503623188405797" />
@@ -22,11 +23,13 @@
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout/activity_todoinside.xml" value="0.4" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout/calendaritemmain.xml" value="0.264" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout/doneitemmain.xml" value="0.23143115942028986" />
+        <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout/doneitemmain2.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout/fragment_calendar.xml" value="0.20018115942028986" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout/fragment_done.xml" value="0.24048913043478262" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout/fragment_list.xml" value="0.4" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout/listitemmain.xml" value="0.264" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/layout/todoitem_main.xml" value="0.4" />
+        <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/menu/delete_menu.xml" value="0.27395833333333336" />
         <entry key="..\:/Users/Kim SeungWu/Documents/AndroidLab/Whatareyouupto/app/src/main/res/menu/main_menu.xml" value="0.22037037037037038" />
       </map>
     </option>
