@@ -80,7 +80,7 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
     fun DoneMemo():MutableList<Memo>{
         val list = mutableListOf<Memo>()
         //전체조회
-        val selectAll = "select * from memo WHERE checkbox = 1 ORDER BY day desc, month desc, year desc, mintime asc"
+        val selectAll = "select * from memo WHERE checkbox = 1 ORDER BY day desc, month desc, year desc"
         //읽기전용 데이터베이스 변수
         val rd = this.readableDatabase
         //데이터를 받아 줍니다.

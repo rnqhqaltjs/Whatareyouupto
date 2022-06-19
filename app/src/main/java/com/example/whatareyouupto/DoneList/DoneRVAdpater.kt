@@ -61,7 +61,6 @@ class DoneRVAdapter(val context: Context, val listData:ArrayList<Memo>, var help
 
                 if (isChecked) {
 
-                    binding.item.isEnabled = false
                     binding.checkbox.isEnabled = false
                     binding.title.paintFlags = binding.title.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     binding.mintime.paintFlags = binding.mintime.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -77,6 +76,21 @@ class DoneRVAdapter(val context: Context, val listData:ArrayList<Memo>, var help
 
             binding.checkbox.isChecked = memo.checkbox == true
 
+            binding.item.setOnClickListener {
+
+                val intent = Intent(context, DoneinsideActivity::class.java)
+                intent.putExtra("title", memo.title)
+                intent.putExtra("content", memo.content)
+                intent.putExtra("image", memo.image)
+                intent.putExtra("mintime", memo.mintime)
+                intent.putExtra("maxtime", memo.maxtime)
+                intent.putExtra("id", memo.id)
+                intent.putExtra("year", memo.year)
+                intent.putExtra("month", memo.month)
+                intent.putExtra("day", memo.day)
+                context.startActivity(intent)
+
+            }
         }
 
     }

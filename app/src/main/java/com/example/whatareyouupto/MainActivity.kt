@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.item_deleteall -> {
 
                     val builder = AlertDialog.Builder(this)
-                    builder.setTitle("알림")
-                    builder.setMessage("전체 데이터를 삭제하시겠습니까?")
+                    builder.setTitle("주의")
+                    builder.setMessage("데이터를 초기화 하시겠습니까?")
 
                     builder.setNegativeButton("아니오") { dialog, which ->
 
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
                         helper.deleteAllMemo()
 
-                        Toast.makeText(this,"데이터 삭제 완료", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this,"데이터 초기화 완료", Toast.LENGTH_SHORT).show()
                         finish();//인텐트 종료
                         overridePendingTransition(0, 0);//인텐트 효과 없애기
                         val intent = intent; //인텐트

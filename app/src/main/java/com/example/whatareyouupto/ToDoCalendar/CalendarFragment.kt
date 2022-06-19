@@ -3,6 +3,7 @@ package com.example.whatareyouupto.ToDoCalendar
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.example.whatareyouupto.sqlite.SqliteHelper
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.CalendarMode
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CalendarFragment : Fragment() {
 
@@ -44,7 +46,7 @@ class CalendarFragment : Fragment() {
     ): View? {
         binding = FragmentCalendarBinding.inflate(inflater,container,false)
 
-        //        binding.calendarView.addDecorator(EventDecorator(Color.GRAY, Collections.singleton(date2)))
+
 
         //캘린더 ui
         val startTimeCalendar = Calendar.getInstance()
@@ -73,6 +75,8 @@ class CalendarFragment : Fragment() {
         val boldDecorator = BoldDecorator(stCalendarDay, enCalendarDay)
         val todayDecorator = TodayDecorator(requireContext())
         val myselectordecorator = MySelectorDecorator(requireContext())
+
+        binding.calendarView.addDecorator(EventDecorator(Color.BLACK, Collections.singleton(stCalendarDay)))
 
 //        binding.calendarView.selectedDate = stCalendarDay
 
