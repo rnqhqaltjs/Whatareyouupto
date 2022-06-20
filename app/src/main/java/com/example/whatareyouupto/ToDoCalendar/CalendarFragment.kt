@@ -51,7 +51,7 @@ class CalendarFragment : Fragment() {
     ): View {
         binding = FragmentCalendarBinding.inflate(inflater,container,false)
 
-        dotdecorator()
+//        dotdecorator()
 
 //        binding.calendarView.selectedDate = stCalendarDay
 
@@ -77,9 +77,11 @@ class CalendarFragment : Fragment() {
 
             }
 
+
             ShowRecyclerView()
 
         }
+
 
         return binding.root
     }
@@ -91,6 +93,7 @@ class CalendarFragment : Fragment() {
 
         dotdecorator()
         ShowRecyclerView()
+
 
     }
 
@@ -124,64 +127,57 @@ class CalendarFragment : Fragment() {
         val dates = ArrayList<CalendarDay>()
         val cursor = helper?.readableDatabase?.rawQuery("select year,month,day from memo", null)
 
-        CoroutineScope(Dispatchers.IO).launch {
+        if(cursor!!.moveToFirst()) {
+            while (!cursor.isAfterLast) {
+                val dot_year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
+                val dot_month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
+                val dot_day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
+                dates.add(CalendarDay(dot_year, dot_month, dot_day))
+                Log.d("dates", dates.toString())
 
-            if(cursor!!.moveToFirst()) {
-                while (!cursor.isAfterLast) {
-                    val dot_year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
-                    val dot_month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
-                    val dot_day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
-                    dates.add(CalendarDay(dot_year, dot_month, dot_day))
-                    Log.d("dates", dates.toString())
-
-                    cursor.moveToNext()
-
-                }
+                cursor.moveToNext()
 
             }
-            cursor.close()
 
         }
+        cursor.close()
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            // 점은 처음부터 다시 찍어야 함
-            binding.calendarView.removeDecorators()
-            binding.calendarView.invalidateDecorators()
+        binding.calendarView.removeDecorators()
+        binding.calendarView.invalidateDecorators()
 
-            //캘린더 ui
-            val startTimeCalendar = Calendar.getInstance()
-            val endTimeCalendar = Calendar.getInstance()
+        //캘린더 ui
+        val startTimeCalendar = Calendar.getInstance()
+        val endTimeCalendar = Calendar.getInstance()
 
-            val currentYear = startTimeCalendar.get(Calendar.YEAR)
-            val currentMonth = startTimeCalendar.get(Calendar.MONTH)
-            val currentDate = startTimeCalendar.get(Calendar.DATE)
+        val currentYear = startTimeCalendar.get(Calendar.YEAR)
+        val currentMonth = startTimeCalendar.get(Calendar.MONTH)
+        val currentDate = startTimeCalendar.get(Calendar.DATE)
 
-            endTimeCalendar.set(Calendar.MONTH, currentMonth+5)
+        endTimeCalendar.set(Calendar.MONTH, currentMonth+5)
 
-            binding.calendarView.state().edit()
-                .setFirstDayOfWeek(Calendar.SUNDAY)
-                .setMinimumDate(CalendarDay.from(currentYear, currentMonth, 1))
-                .setMaximumDate(CalendarDay.from(currentYear, currentMonth+5, endTimeCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)))
-                .setCalendarDisplayMode(CalendarMode.MONTHS)
-                .commit()
+        binding.calendarView.state().edit()
+            .setFirstDayOfWeek(Calendar.SUNDAY)
+            .setMinimumDate(CalendarDay.from(currentYear, currentMonth, 1))
+            .setMaximumDate(CalendarDay.from(currentYear, currentMonth+5, endTimeCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)))
+            .setCalendarDisplayMode(CalendarMode.MONTHS)
+            .commit()
 
-            val stCalendarDay = CalendarDay(currentYear, currentMonth, currentDate)
-            val enCalendarDay = CalendarDay(endTimeCalendar.get(Calendar.YEAR), endTimeCalendar.get(
-                Calendar.MONTH), endTimeCalendar.get(Calendar.DATE))
+        val stCalendarDay = CalendarDay(currentYear, currentMonth, currentDate)
+        val enCalendarDay = CalendarDay(endTimeCalendar.get(Calendar.YEAR), endTimeCalendar.get(
+            Calendar.MONTH), endTimeCalendar.get(Calendar.DATE))
 
-            val sundayDecorator = SundayDecorator()
-            val saturdayDecorator = SaturdayDecorator()
-            val minMaxDecorator = MinMaxDecorator(stCalendarDay, enCalendarDay)
-            val boldDecorator = BoldDecorator(stCalendarDay, enCalendarDay)
-            val todayDecorator = TodayDecorator(requireContext())
-            val myselectordecorator = MySelectorDecorator(requireContext())
-            // 토, 일 색칠 + 오늘 날짜 표시
-            binding.calendarView.addDecorators(boldDecorator, sundayDecorator, saturdayDecorator, myselectordecorator, minMaxDecorator, todayDecorator)
+        val sundayDecorator = SundayDecorator()
+        val saturdayDecorator = SaturdayDecorator()
+        val minMaxDecorator = MinMaxDecorator(stCalendarDay, enCalendarDay)
+        val boldDecorator = BoldDecorator(stCalendarDay, enCalendarDay)
+        val todayDecorator = TodayDecorator(requireContext())
+        val myselectordecorator = MySelectorDecorator(requireContext())
+        // 토, 일 색칠 + 오늘 날짜 표시
+        binding.calendarView.addDecorators(boldDecorator, sundayDecorator, saturdayDecorator, myselectordecorator, minMaxDecorator, todayDecorator)
 
-            if (dates.size > 0) {
-                binding.calendarView.addDecorator(EventDecorator(Color.BLACK, dates))
-            }
-        }, 0)
+        if (dates.size > 0) {
+            binding.calendarView.addDecorator(EventDecorator(Color.BLACK, dates))
+        }
 
     }
 
