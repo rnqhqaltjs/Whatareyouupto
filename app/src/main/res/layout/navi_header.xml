@@ -10,4 +10,5 @@
         android:layout_height="170dp"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/orangecolorbacground" />
+
 </RelativeLayout>
