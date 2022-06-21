@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ToDoCalendar.CalendarFragment">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,16 +35,18 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:elevation="10dp"
-            app:cardCornerRadius="15dp"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp" >
+            android:elevation="10dp"
+            app:cardCornerRadius="15dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"/>
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -56,4 +62,6 @@
             app:tint="@android:color/white"/>
 
     </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </FrameLayout>

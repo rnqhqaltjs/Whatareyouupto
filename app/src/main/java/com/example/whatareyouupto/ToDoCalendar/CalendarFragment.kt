@@ -111,14 +111,6 @@ class CalendarFragment : Fragment() {
         helper?.let { adapter?.listData?.addAll(it.selectMemo(memoyear,memomonth,memoday)) }
         adapter?.notifyDataSetChanged()
 
-        val itemcount = binding.recyclerView.adapter?.itemCount
-
-        if (itemcount!! >=3) {
-
-            binding.fab.isVisible = false
-
-        }
-
     }
 
     @SuppressLint("Recycle")
@@ -142,8 +134,12 @@ class CalendarFragment : Fragment() {
         }
         cursor.close()
 
+
+
         binding.calendarView.removeDecorators()
         binding.calendarView.invalidateDecorators()
+
+
 
         //캘린더 ui
         val startTimeCalendar = Calendar.getInstance()
@@ -155,12 +151,16 @@ class CalendarFragment : Fragment() {
 
         endTimeCalendar.set(Calendar.MONTH, currentMonth+5)
 
+
+
         binding.calendarView.state().edit()
             .setFirstDayOfWeek(Calendar.SUNDAY)
             .setMinimumDate(CalendarDay.from(currentYear, currentMonth, 1))
             .setMaximumDate(CalendarDay.from(currentYear, currentMonth+5, endTimeCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)))
             .setCalendarDisplayMode(CalendarMode.MONTHS)
             .commit()
+
+
 
         val stCalendarDay = CalendarDay(currentYear, currentMonth, currentDate)
         val enCalendarDay = CalendarDay(endTimeCalendar.get(Calendar.YEAR), endTimeCalendar.get(
@@ -178,6 +178,8 @@ class CalendarFragment : Fragment() {
         if (dates.size > 0) {
             binding.calendarView.addDecorator(EventDecorator(Color.BLACK, dates))
         }
+
+
 
     }
 

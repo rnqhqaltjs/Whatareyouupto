@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$PROJECT_DIR$/../../../../Kim%20SeungWu/AppData/Local/Android/Sdk/icons/material/materialicons/close/baseline_close_24.xml" />
+                                      <entry key="url" value="file:/$PROJECT_DIR$/../../../../Kim%20SeungWu/AppData/Local/Android/Sdk/icons/material/materialicons/folder_delete/baseline_folder_delete_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,7 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="delete" />
+                            <entry key="outputName" value="data_reset" />
                             <entry key="sourceFile" value="C:\Users\Kim SeungWu\Documents\AndroidLab\Whatareyouupto" />
                           </map>
                         </option>

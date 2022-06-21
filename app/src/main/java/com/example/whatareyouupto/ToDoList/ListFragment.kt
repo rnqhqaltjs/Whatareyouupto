@@ -118,16 +118,10 @@ class ListFragment : Fragment() {
 
         val itemcount = binding.recyclerView.adapter?.itemCount
 
-        if (itemcount!! >=3) {
-
-            binding.fab.isVisible = false
-
-        }
-
         val Cursor = helper?.readableDatabase?.rawQuery("select * from memo WHERE year = $currentYear" +
                 " and month = $currentMonth and day = $currentDate and checkbox = 1",null)
 
-        binding.progressBar.max = itemcount
+        binding.progressBar.max = itemcount!!
         binding.progressBar.progress = Cursor!!.count
 
         val n1 = itemcount.toDouble()

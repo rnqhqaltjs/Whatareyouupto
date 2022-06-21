@@ -1,7 +1,6 @@
 package com.example.whatareyouupto
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -11,7 +10,6 @@ import com.example.whatareyouupto.databinding.ActivityMainBinding
 import com.example.whatareyouupto.sqlite.SqliteHelper
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity() {

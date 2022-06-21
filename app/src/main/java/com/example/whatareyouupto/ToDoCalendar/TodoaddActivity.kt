@@ -140,7 +140,7 @@ class TodoaddActivity : AppCompatActivity() {
             image = R.drawable.starpick
         }
 
-        //  스위치를 클릭했을때
+        //  종일 스위치를 클릭했을때
         binding.allday.setOnCheckedChangeListener{
                 CompoundButton, onSwitch ->
 
