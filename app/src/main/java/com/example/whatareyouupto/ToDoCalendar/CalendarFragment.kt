@@ -34,9 +34,6 @@ class CalendarFragment : Fragment() {
     private var memoyear = 0
     private var memomonth = 0
     private var memoday = 0
-    //    private var date2 = CalendarDay(Calendar.getInstance().get(Calendar.YEAR),
-//        Calendar.getInstance().get(Calendar.YEAR),
-//            Calendar.getInstance().get(Calendar.YEAR))
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -50,10 +47,6 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCalendarBinding.inflate(inflater,container,false)
-
-//        dotdecorator()
-
-//        binding.calendarView.selectedDate = stCalendarDay
 
         binding.calendarView.setOnDateChangedListener { widget, date, selected ->
 
@@ -77,11 +70,9 @@ class CalendarFragment : Fragment() {
 
             }
 
-
             ShowRecyclerView()
 
         }
-
 
         return binding.root
     }
@@ -93,7 +84,6 @@ class CalendarFragment : Fragment() {
 
         dotdecorator()
         ShowRecyclerView()
-
 
     }
 
@@ -119,13 +109,46 @@ class CalendarFragment : Fragment() {
         val dates = ArrayList<CalendarDay>()
         val cursor = helper?.readableDatabase?.rawQuery("select year,month,day from memo", null)
 
+        //데이터 베이스에 있는 연,원,일 데이터를 모두 갖고옴
         if(cursor!!.moveToFirst()) {
             while (!cursor.isAfterLast) {
+
+                val startTimeCalendar = Calendar.getInstance()
+
                 val dot_year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
                 val dot_month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
                 val dot_day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
-                dates.add(CalendarDay(dot_year, dot_month, dot_day))
-                Log.d("dates", dates.toString())
+
+                val Today = Calendar.getInstance().apply {
+                    set(Calendar.YEAR, startTimeCalendar.get(Calendar.YEAR))
+                    set(Calendar.MONTH, startTimeCalendar.get(Calendar.MONTH))
+                    set(Calendar.DAY_OF_MONTH, startTimeCalendar.get(Calendar.DATE))
+                }.timeInMillis
+
+                val dot_date = Calendar.getInstance().apply {
+                    set(Calendar.YEAR, dot_year)
+                    set(Calendar.MONTH, dot_month)
+                    set(Calendar.DAY_OF_MONTH, dot_day)
+                }.timeInMillis
+
+                //편한 날짜 계산을 위해 시,분,초 배제
+                fun getIgnoredTimeDays(time: Long): Long {
+                    return Calendar.getInstance().apply {
+                        timeInMillis = time
+
+                        set(Calendar.HOUR_OF_DAY, 0)
+                        set(Calendar.MINUTE, 0)
+                        set(Calendar.SECOND, 0)
+                        set(Calendar.MILLISECOND, 0)
+                    }.timeInMillis
+                }
+
+                //일정이 이미 오늘보다 지난 날짜에 있으면 점을 찍지 않는다.
+                if(getIgnoredTimeDays(Today)-getIgnoredTimeDays(dot_date)<=0) {
+                    dates.add(CalendarDay(dot_year, dot_month, dot_day))
+                    Log.d("dates", dates.toString())
+
+                }
 
                 cursor.moveToNext()
 
@@ -134,12 +157,9 @@ class CalendarFragment : Fragment() {
         }
         cursor.close()
 
-
-
+        //캘린더 초기화
         binding.calendarView.removeDecorators()
         binding.calendarView.invalidateDecorators()
-
-
 
         //캘린더 ui
         val startTimeCalendar = Calendar.getInstance()
@@ -151,8 +171,7 @@ class CalendarFragment : Fragment() {
 
         endTimeCalendar.set(Calendar.MONTH, currentMonth+5)
 
-
-
+        //이미 지난 날짜거나 오늘날짜 +5달보다 이후에 있는 날짜는 일정 추가 불가능
         binding.calendarView.state().edit()
             .setFirstDayOfWeek(Calendar.SUNDAY)
             .setMinimumDate(CalendarDay.from(currentYear, currentMonth, 1))
@@ -160,8 +179,7 @@ class CalendarFragment : Fragment() {
             .setCalendarDisplayMode(CalendarMode.MONTHS)
             .commit()
 
-
-
+        //토, 일, 오늘날짜 색 꾸미기 + 날짜
         val stCalendarDay = CalendarDay(currentYear, currentMonth, currentDate)
         val enCalendarDay = CalendarDay(endTimeCalendar.get(Calendar.YEAR), endTimeCalendar.get(
             Calendar.MONTH), endTimeCalendar.get(Calendar.DATE))
@@ -172,9 +190,10 @@ class CalendarFragment : Fragment() {
         val boldDecorator = BoldDecorator(stCalendarDay, enCalendarDay)
         val todayDecorator = TodayDecorator(requireContext())
         val myselectordecorator = MySelectorDecorator(requireContext())
-        // 토, 일 색칠 + 오늘 날짜 표시
+
         binding.calendarView.addDecorators(boldDecorator, sundayDecorator, saturdayDecorator, myselectordecorator, minMaxDecorator, todayDecorator)
 
+        //날짜에 일정이 최소 하나이상 존재하면 점을 찍는다
         if (dates.size > 0) {
             binding.calendarView.addDecorator(EventDecorator(Color.BLACK, dates))
         }

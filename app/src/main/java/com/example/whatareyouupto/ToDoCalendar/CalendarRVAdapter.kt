@@ -19,18 +19,14 @@ import com.example.whatareyouupto.sqlite.SqliteHelper
 class CalendarRVAdapter(val context: Context, val listData:ArrayList<Memo>, var helper: SqliteHelper? = null)
     : RecyclerView.Adapter<CalendarRVAdapter.Viewholder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
-        val binding =
-            CalendaritemmainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
+        val binding = CalendaritemmainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Viewholder(binding)
     }
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
         val memo: Memo = listData[position]
         holder.setMemo(memo)
-
     }
 
     override fun getItemCount(): Int {
