@@ -10,6 +10,7 @@ import com.example.whatareyouupto.databinding.ActivityMainBinding
 import com.example.whatareyouupto.sqlite.SqliteHelper
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity() {
@@ -91,7 +92,11 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
-                R.id.item_manual -> {
+                R.id.item_exit -> {
+
+                    moveTaskToBack(true)
+                    finishAndRemoveTask()
+                    exitProcess(0)
 
                 }
 

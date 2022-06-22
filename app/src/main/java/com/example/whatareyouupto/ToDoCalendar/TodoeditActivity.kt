@@ -104,7 +104,7 @@ class TodoeditActivity : AppCompatActivity() {
             binding.bookmark.setImageResource(R.drawable.bookmarkpick)
             R.drawable.bookmarkpick
 
-        } else{
+        } else {
 
             binding.star.setImageResource(R.drawable.starpick)
             R.drawable.starpick

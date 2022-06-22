@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -109,53 +107,57 @@ class CalendarFragment : Fragment() {
         val dates = ArrayList<CalendarDay>()
         val cursor = helper?.readableDatabase?.rawQuery("select year,month,day from memo", null)
 
-        //데이터 베이스에 있는 연,원,일 데이터를 모두 갖고옴
-        if(cursor!!.moveToFirst()) {
-            while (!cursor.isAfterLast) {
+        //ANR 발생을 없애기 위해 코루틴 사용
+        CoroutineScope(Dispatchers.IO).launch {
 
-                val startTimeCalendar = Calendar.getInstance()
+            //데이터 베이스에 있는 연,원,일 데이터를 모두 갖고옴
+            if(cursor!!.moveToFirst()) {
+                while (!cursor.isAfterLast) {
 
-                val dot_year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
-                val dot_month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
-                val dot_day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
+                    val startTimeCalendar = Calendar.getInstance()
 
-                val Today = Calendar.getInstance().apply {
-                    set(Calendar.YEAR, startTimeCalendar.get(Calendar.YEAR))
-                    set(Calendar.MONTH, startTimeCalendar.get(Calendar.MONTH))
-                    set(Calendar.DAY_OF_MONTH, startTimeCalendar.get(Calendar.DATE))
-                }.timeInMillis
+                    val dot_year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
+                    val dot_month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
+                    val dot_day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
 
-                val dot_date = Calendar.getInstance().apply {
-                    set(Calendar.YEAR, dot_year)
-                    set(Calendar.MONTH, dot_month)
-                    set(Calendar.DAY_OF_MONTH, dot_day)
-                }.timeInMillis
-
-                //편한 날짜 계산을 위해 시,분,초 배제
-                fun getIgnoredTimeDays(time: Long): Long {
-                    return Calendar.getInstance().apply {
-                        timeInMillis = time
-
-                        set(Calendar.HOUR_OF_DAY, 0)
-                        set(Calendar.MINUTE, 0)
-                        set(Calendar.SECOND, 0)
-                        set(Calendar.MILLISECOND, 0)
+                    val Today = Calendar.getInstance().apply {
+                        set(Calendar.YEAR, startTimeCalendar.get(Calendar.YEAR))
+                        set(Calendar.MONTH, startTimeCalendar.get(Calendar.MONTH))
+                        set(Calendar.DAY_OF_MONTH, startTimeCalendar.get(Calendar.DATE))
                     }.timeInMillis
+
+                    val dot_date = Calendar.getInstance().apply {
+                        set(Calendar.YEAR, dot_year)
+                        set(Calendar.MONTH, dot_month)
+                        set(Calendar.DAY_OF_MONTH, dot_day)
+                    }.timeInMillis
+
+                    //편한 날짜 계산을 위해 시,분,초 배제
+                    fun getIgnoredTimeDays(time: Long): Long {
+                        return Calendar.getInstance().apply {
+                            timeInMillis = time
+
+                            set(Calendar.HOUR_OF_DAY, 0)
+                            set(Calendar.MINUTE, 0)
+                            set(Calendar.SECOND, 0)
+                            set(Calendar.MILLISECOND, 0)
+                        }.timeInMillis
+                    }
+
+                    //일정이 이미 오늘보다 지난 날짜에 있으면 점을 찍지 않는다.
+                    if(getIgnoredTimeDays(Today)-getIgnoredTimeDays(dot_date)<=0) {
+                        dates.add(CalendarDay(dot_year, dot_month, dot_day))
+                        Log.d("dates", dates.toString())
+
+                    }
+
+                    cursor.moveToNext()
+
                 }
-
-                //일정이 이미 오늘보다 지난 날짜에 있으면 점을 찍지 않는다.
-                if(getIgnoredTimeDays(Today)-getIgnoredTimeDays(dot_date)<=0) {
-                    dates.add(CalendarDay(dot_year, dot_month, dot_day))
-                    Log.d("dates", dates.toString())
-
-                }
-
-                cursor.moveToNext()
 
             }
-
+            cursor.close()
         }
-        cursor.close()
 
         //캘린더 초기화
         binding.calendarView.removeDecorators()

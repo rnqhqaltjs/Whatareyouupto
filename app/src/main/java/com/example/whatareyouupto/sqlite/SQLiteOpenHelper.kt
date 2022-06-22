@@ -5,12 +5,10 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-// SQLiteOpenHelper 상속받아 SQLite 를 사용하도록 하겠습니다.
+// SQLiteOpenHelper 상속받아 SQLite 를 사용
 class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) : SQLiteOpenHelper(context, name, factory, version) {
 
-    //onCreate(), onUpgrade() 두가지 메소드를 오버라이드 받아 줍시다.
-
-    //데이터베이스가 만들어 지지않은 상태에서만 작동합니다. 이미 만들어져 있는 상태라면 실행되지 않습니다.
+    //데이터베이스가 만들어 지지않은 상태에서만 작동, 이미 만들어져 있는 상태라면 실행되지 않는다
     override fun onCreate(db: SQLiteDatabase?) {
         //테이블을 생성할 쿼리를 작성하여 줍시다.
         val create = "create table memo (id integer primary key,checkbox integer,title text,content text, image integer, mintime text, maxtime text,year integer, month integer, day integer)"
@@ -98,8 +96,6 @@ class SqliteHelper(context: Context?, name: String?, factory: SQLiteDatabase.Cur
             val year = cursor.getInt(cursor.getColumnIndexOrThrow("year"))
             val month = cursor.getInt(cursor.getColumnIndexOrThrow("month"))
             val day = cursor.getInt(cursor.getColumnIndexOrThrow("day"))
-
-
 
             list.add(Memo(id,checkbox,title,content,image,mintime,maxtime,year,month,day))
         }

@@ -3,22 +3,16 @@ package com.example.whatareyouupto.ToDoCalendar
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.whatareyouupto.CalendarDecorator.EventDecorator
 import com.example.whatareyouupto.R
 import com.example.whatareyouupto.databinding.ActivityTodoaddBinding
 import com.example.whatareyouupto.sqlite.Memo
 import com.example.whatareyouupto.sqlite.SqliteHelper
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import java.text.SimpleDateFormat
 import java.util.*
 

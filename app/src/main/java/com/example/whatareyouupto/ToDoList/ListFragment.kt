@@ -3,7 +3,6 @@ package com.example.whatareyouupto.ToDoList
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,6 @@ import com.example.whatareyouupto.ToDoCalendar.TodoaddActivity
 import com.example.whatareyouupto.databinding.FragmentListBinding
 import com.example.whatareyouupto.sqlite.Memo
 import com.example.whatareyouupto.sqlite.SqliteHelper
-import java.lang.Double.NaN
 import java.util.*
 
 
@@ -24,6 +22,12 @@ class ListFragment : Fragment() {
     private lateinit var binding: FragmentListBinding
     private val listData = ArrayList<Memo>()
     private var helper: SqliteHelper? = null
+
+    private val startTimeCalendar = Calendar.getInstance()
+
+    private val currentYear = startTimeCalendar.get(Calendar.YEAR)
+    private val currentMonth = startTimeCalendar.get(Calendar.MONTH)
+    private val currentDate = startTimeCalendar.get(Calendar.DATE)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -37,12 +41,6 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentListBinding.inflate(inflater,container,false)
-
-        val startTimeCalendar = Calendar.getInstance()
-
-        val currentYear = startTimeCalendar.get(Calendar.YEAR)
-        val currentMonth = startTimeCalendar.get(Calendar.MONTH)
-        val currentDate = startTimeCalendar.get(Calendar.DATE)
 
         binding.day.text = currentDate.toString() + "일 "
         binding.month.text = (currentMonth+1).toString() + "월 "
@@ -58,30 +56,14 @@ class ListFragment : Fragment() {
 
         }
 
+        binding.refresh.setOnClickListener {
+
+            progressbar()
+
+        }
 
 
         ShowRecyclerView()
-
-        binding.refresh.setOnClickListener {
-
-            val itemcount = binding.recyclerView.adapter?.itemCount
-
-            val Cursor = helper?.readableDatabase?.rawQuery("select * from memo WHERE year = $currentYear" +
-                    " and month = $currentMonth and day = $currentDate and checkbox = 1",null)
-
-            binding.progressBar.max = itemcount!!
-            binding.progressBar.progress = Cursor!!.count
-
-            val n1 = itemcount.toDouble()
-            val n2 = Cursor.count.toDouble()
-
-            binding.cbc.text = String.format("%.0f",(n2/n1)*100) + "%"
-
-            if(binding.cbc.text == "NaN%"){
-                binding.cbc.text = "0%"
-            }
-
-        }
 
         return binding.root
     }
@@ -91,6 +73,7 @@ class ListFragment : Fragment() {
         super.onResume()
 
         ShowRecyclerView()
+        progressbar()
 
     }
 
@@ -116,23 +99,26 @@ class ListFragment : Fragment() {
         helper?.let { adapter?.listData?.addAll(it.selectMemo(currentYear,currentMonth,currentDate)) }
         adapter?.notifyDataSetChanged()
 
-        val itemcount = binding.recyclerView.adapter?.itemCount
+    }
 
-        val Cursor = helper?.readableDatabase?.rawQuery("select * from memo WHERE year = $currentYear" +
-                " and month = $currentMonth and day = $currentDate and checkbox = 1",null)
+    fun progressbar(){
 
-        binding.progressBar.max = itemcount!!
-        binding.progressBar.progress = Cursor!!.count
+            val itemcount = binding.recyclerView.adapter?.itemCount
 
-        val n1 = itemcount.toDouble()
-        val n2 = Cursor.count.toDouble()
+            val Cursor = helper?.readableDatabase?.rawQuery("select * from memo WHERE year = $currentYear" +
+                    " and month = $currentMonth and day = $currentDate and checkbox = 1",null)
 
-        binding.cbc.text = String.format("%.0f",(n2/n1)*100) + "%"
+            binding.progressBar.max = itemcount!!
+            binding.progressBar.progress = Cursor!!.count
 
-        if(binding.cbc.text == "NaN%"){
-            binding.cbc.text = "0%"
-        }
+            val n1 = itemcount.toDouble()
+            val n2 = Cursor.count.toDouble()
 
+            binding.cbc.text = String.format("%.0f",(n2/n1)*100) + "%"
+
+            if(binding.cbc.text == "NaN%"){
+                binding.cbc.text = "0%"
+            }
 
     }
 }
