@@ -47,7 +47,7 @@ class DoneRVAdapter(val context: Context, val listData:ArrayList<Memo>, var help
             binding.mintime.text = memo.mintime
             binding.maxtime.text = memo.maxtime
             binding.day.text = memo.day.toString() + "일"
-            binding.month.text = memo.month.toString() + "월"
+            binding.month.text = (memo.month+1).toString() + "월"
             binding.year.text = memo.year.toString() + "년"
 
             Glide.with(context)

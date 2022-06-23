@@ -60,7 +60,6 @@ class DoneFragment : Fragment() {
         helper?.let { adapter?.listData?.addAll(it.DoneMemo()) }
         adapter?.notifyDataSetChanged()
 
-
     }
 
 }

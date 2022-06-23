@@ -19,7 +19,6 @@ import com.example.whatareyouupto.sqlite.SqliteHelper
 class ListRVAdapter(val context: Context, val listData:ArrayList<Memo>, var helper: SqliteHelper? = null)
     : RecyclerView.Adapter<ListRVAdapter.Viewholder>(){
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
         val binding = ListitemmainBinding.inflate(LayoutInflater.from(parent.context),parent,false)
 
@@ -81,8 +80,6 @@ class ListRVAdapter(val context: Context, val listData:ArrayList<Memo>, var help
                     binding.maxtime.setTypeface(null, Typeface.ITALIC)
                     binding.title.setTextColor(Color.parseColor("#808080"))
                     binding.image.setColorFilter(Color.parseColor("#808080"))
-
-
 
                     helper?.updatecheckbox(memo.id!!,true)
 

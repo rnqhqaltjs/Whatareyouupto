@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.whatareyouupto.R
 import com.example.whatareyouupto.ToDoCalendar.TodoaddActivity
 import com.example.whatareyouupto.databinding.FragmentListBinding
 import com.example.whatareyouupto.sqlite.Memo
@@ -61,7 +63,6 @@ class ListFragment : Fragment() {
             progressbar()
 
         }
-
 
         ShowRecyclerView()
 
