@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,6 +67,19 @@ class ListFragment : Fragment() {
 
         ShowRecyclerView()
 
+        //프로그레스바를 0.1초마다 반복실행시켜 실시간 진행도 반영
+        val handler = Handler()
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                if (true) {
+
+                    progressbar()
+                    handler.postDelayed(this, 100)
+
+                }
+            }
+        }, 100)
+
         return binding.root
     }
 
@@ -74,7 +88,6 @@ class ListFragment : Fragment() {
         super.onResume()
 
         ShowRecyclerView()
-        progressbar()
 
     }
 
