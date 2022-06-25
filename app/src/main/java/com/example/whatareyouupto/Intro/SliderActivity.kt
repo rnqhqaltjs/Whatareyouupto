@@ -1,6 +1,5 @@
 package com.example.whatareyouupto.Intro
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -12,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.whatareyouupto.MainActivity
+import com.example.whatareyouupto.R
 import com.example.whatareyouupto.databinding.ActivitySliderBinding
 
 class SliderActivity : AppCompatActivity() {
@@ -37,9 +37,12 @@ class SliderActivity : AppCompatActivity() {
             startActivity(Intent(this,MainActivity::class.java))
             finish()
         }
-        fragment1.setTitle("Welcome")
-        fragment2.setTitle("To CodeAndroid")
-        fragment3.setTitle("YouTube Channel")
+        fragment1.setTitle("원하는 날짜를 선택하여 일정을 추가하세요!")
+        fragment1.setImage(R.drawable.tutorial1)
+        fragment2.setTitle("오늘 일정을 완료했으면 체크를 하세요!")
+        fragment2.setImage(R.drawable.tutorial2)
+        fragment3.setTitle("완료한 일정들은 '타임라인' 탭에서 확인하세요!")
+        fragment3.setImage(R.drawable.tutorial3)
 
         adapter = myPagerAdapter(supportFragmentManager)
         adapter.list.add(fragment1)
@@ -81,19 +84,19 @@ class SliderActivity : AppCompatActivity() {
 
                 when(binding.viewPager.currentItem){
                     0->{
-                        binding.indicator1.setTextColor(Color.BLACK)
+                        binding.indicator1.setTextColor(Color.parseColor("#FF7F00"))
                         binding.indicator2.setTextColor(Color.GRAY)
                         binding.indicator3.setTextColor(Color.GRAY)
                     }
                     1->{
                         binding.indicator1.setTextColor(Color.GRAY)
-                        binding.indicator2.setTextColor(Color.BLACK)
+                        binding.indicator2.setTextColor(Color.parseColor("#FF7F00"))
                         binding.indicator3.setTextColor(Color.GRAY)
                     }
                     2->{
                         binding.indicator1.setTextColor(Color.GRAY)
                         binding.indicator2.setTextColor(Color.GRAY)
-                        binding.indicator3.setTextColor(Color.BLACK)
+                        binding.indicator3.setTextColor(Color.parseColor("#FF7F00"))
                     }
                 }
 
