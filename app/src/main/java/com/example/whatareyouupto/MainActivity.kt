@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         binding.navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
 
+                //데이터 초기화
                 R.id.item_deleteall -> {
 
                     val builder = AlertDialog.Builder(this)
@@ -92,11 +93,19 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
+                //나가기
                 R.id.item_exit -> {
 
                     moveTaskToBack(true)
                     finishAndRemoveTask()
                     exitProcess(0)
+
+                }
+
+                //개발자 정보
+                R.id.item_info -> {
+
+
 
                 }
 

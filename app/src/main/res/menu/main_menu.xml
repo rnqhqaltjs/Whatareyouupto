@@ -13,5 +13,10 @@
         android:title="나가기"
         android:icon="@drawable/exit"/>
 
+    <item
+        android:id="@+id/item_info"
+        android:title="개발자 정보"
+        android:icon="@drawable/ic_baseline_info_24"/>
+
 
 </menu>
