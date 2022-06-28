@@ -20,11 +20,10 @@ class IntroActivity : AppCompatActivity() {
         binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val introtitle = binding.introtitle
-        val introsub = binding.introsub
+        val introtitle = binding.imageView3
+
 
         introtitle.bringToFront()
-        introsub.bringToFront()
 
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, SliderActivity::class.java)
