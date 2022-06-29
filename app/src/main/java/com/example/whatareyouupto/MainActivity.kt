@@ -1,6 +1,7 @@
 package com.example.whatareyouupto
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -8,6 +9,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.whatareyouupto.databinding.ActivityMainBinding
 import com.example.whatareyouupto.sqlite.SqliteHelper
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlin.system.exitProcess
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             R.string.drawer_opened,
             R.string.drawer_closed
         )
-        supportActionBar?.setDisplayShowCustomEnabled(true)
+
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -102,10 +104,10 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
-                //개발자 정보
+                //오픈소스 라이선스
                 R.id.item_info -> {
 
-
+                    startActivity(Intent(this, OssLicensesMenuActivity::class.java))
 
                 }
 
