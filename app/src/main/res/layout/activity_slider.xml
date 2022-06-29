@@ -49,21 +49,21 @@
                 android:id="@+id/indicator2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="."
                 android:textColor="@android:color/darker_gray"
                 android:textSize="50sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="10dp"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/indicator3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="."
                 android:textColor="@android:color/darker_gray"
                 android:textSize="50sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="10dp"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView

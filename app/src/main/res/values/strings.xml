@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Whatareyouupto</string>
+    <string name="app_name">투두 캘린더</string>
 
     <string name="drawer_opened">Open</string>
     <string name="drawer_closed">Close</string>
