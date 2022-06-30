@@ -7,13 +7,16 @@
 
 ### 캘린더(Todo Calendar)
 캘린더 날짜마다 일정을 추가, 수정, 삭제할 수 있으며, 날짜마다 내가 추가시켰던 일정들을 확인할 수 있다.  
+![function1](https://user-images.githubusercontent.com/86480696/176646275-7ea3b5f8-34df-4a8c-9f83-3bc981d6f013.gif)
 
 ### 오늘뭐해?(Today List)
 이름 그대로 캘린더에서 내가 추가시켰던 일정들 중에 오늘 일정이 무엇인지 한눈에 볼 수 있고, 일정을 완료했으면 직접 체크하여 일정을 완료할 수 있다.  
 오늘 일정들 중에서 완료한 일정의 비율을 '진행도'를 이용하여 실시간으로 확인할 수 있다.  
+![function2](https://user-images.githubusercontent.com/86480696/176646290-97c6f101-a1de-4b90-a0fb-508f493bec53.gif)
 
 ### 타임라인(Done List)
 내가 완료했던 일정들을 날짜별로 내림차순으로 확인할 수 있다.  
+![function3](https://user-images.githubusercontent.com/86480696/176646297-6c8f3e16-a180-4232-ae7d-2f0fd2cfe476.gif)
 
 ## 개발일지 
 
