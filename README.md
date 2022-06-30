@@ -116,3 +116,4 @@ ViewPager와 getSharedPreferences 이용해 앱을 처음 설치했을 때만 �
 오랜 고민끝에 반복문을 사용하면 구현할 수 있을거라고 생각했고, SQLite에 저장되어 있는 모든 일정 데이터들의 날짜들을 반복문을 통하여 불러왔고, 그 반복문을 통해 불러온 날짜 데이터들을 리스트에 담아 DotSpan으로 날짜마다 점을 찍을수 있게 구현하였다.  
 하지만, 나중에 데이터가 훨씬 많아지면 MainThread에서 이런 무거운 동작을 할 경우 ANR이 발생할 수 있다고 한다.  
 그래서 Courutine의 CoroutineScope(Dispatchers.IO)를 이용해 DB를 이용하는 작업을 비동기로 바꾸면서 문제를 해결하였다.  
+![dotspan](https://user-images.githubusercontent.com/86480696/176650760-63482b49-3507-4aff-9dc2-18e9f8639d30.gif)
