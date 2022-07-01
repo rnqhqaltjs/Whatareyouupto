@@ -15,7 +15,7 @@
 ![function2](https://user-images.githubusercontent.com/86480696/176646290-97c6f101-a1de-4b90-a0fb-508f493bec53.gif)
 
 ### 타임라인(Done List)
-내가 완료했던 일정들을 내림차순으로 확인 가능하고, 완료한 일정은 삭제할 수 있다. 
+내가 완료했던 일정들을 내림차순으로 확인 가능하고, 완료한 일정은 삭제할 수 있다.  
 ![function3](https://user-images.githubusercontent.com/86480696/176646297-6c8f3e16-a180-4232-ae7d-2f0fd2cfe476.gif)
 
 ## 개발일지 
